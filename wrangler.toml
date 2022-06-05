@@ -1,0 +1,13 @@
+name = "my-cf-api"
+type = "javascript"
+account_id = "19510eada67ada2e5ac85032049cc468"
+entry-point = "build"
+workers_dev = true
+compatibility_date = "2022-06-05"
+
+kv_namespaces = [ 
+         { binding = "VENTRATA", id= "4efeb9184bc4434fbe1b5431fda143d2" ,preview_id = "4efeb9184bc4434fbe1b5431fda143d2" }
+]
+
+[build]
+command = "yarn run build"
