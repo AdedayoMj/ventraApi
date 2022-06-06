@@ -1,6 +1,6 @@
 
-enum UnitID { "adult", "child", "senior", "infant" }
-enum ContactField { "fullName", "emailAddress", "phoneNumber" }
+export type UnitID =  "adult" | "child" | "senior" | "infant"
+export type ContactField= "fullName" | "emailAddress" | "phoneNumber"
 
 
 export interface ValidateJWT {
@@ -15,12 +15,6 @@ export interface Product{
     defaultCurrency: string, // "EUR
     availableCurrencies: string[] // ["EUR", "USD"]
 }
-export type Param = {
-    name: string
-    options: Option[]
-    defaultCurrency: string,
-    availableCurrencies: string[]
-  }
 
 export type Option = {
     id: string,
@@ -35,27 +29,9 @@ export type Unit = {
     name: string,
     pricing: Pricing[]
 }
-export type Contact = {
-    fullName: string | null,
-    emailAddress: string | null,
-    phoneNumber: string | null,
-}
 
 export type Pricing = {
     currency: string,
     currencyPrecision: number,
     price: number,
-}
-export type UnitItem = {
-    unitId: UnitID,
-    quantity: number,
-    price: number,
-}
-export type Booking = {
-    id: string,
-    productId: string,
-    optionId: string,
-    pricing: Pricing
-    unitItems: UnitItem[],
-    contact: Contact,
 }

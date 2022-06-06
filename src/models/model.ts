@@ -1,4 +1,4 @@
-import { Param, Product } from '../types';
+import { Product } from '../types';
 
 const PREFIX = 'v1:post:'
 
@@ -27,19 +27,19 @@ export const getProducts = async (KV: KVNamespace): Promise<Product[]> => {
 export const getProduct = async (KV: KVNamespace, id: string): Promise<Product | undefined> => {
   const value = await KV.get(generateID(id))
   if (!value) return
-  const post: Product = JSON.parse(value)
-  return post
+  const product: Product = JSON.parse(value)
+  return product
 }
 
-export const createProduct = async (KV: KVNamespace, param: Param): Promise<Product | undefined> => {
-  if (!(param && param.name && param.options && param.availableCurrencies && param.defaultCurrency)) return
+export const createProduct = async (KV: KVNamespace, param: Product): Promise< Product| undefined> => {
+  if (!(param && param.name && param.options && param.availableCurrencies && param.defaultCurrency)) return 
   const id = crypto.randomUUID()
   const newPost: Product = { id: id, name: param.name, options: param.options, defaultCurrency: param.defaultCurrency, availableCurrencies: param.availableCurrencies }
   await KV.put(generateID(id), JSON.stringify(newPost))
   return newPost
 }
 
-export const updateProduct = async (KV: KVNamespace, id: string, param: Param): Promise<boolean> => {
+export const updateProduct = async (KV: KVNamespace, id: string, param: Product): Promise<boolean> => {
   if (!(param && param.name && param.options)) return false
   const post = await getProduct(KV, id)
   if (!post) return false

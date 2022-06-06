@@ -917,24 +917,24 @@ api.post('/products', async (c) => {
     const param = c.req.parsedBody;
     if (!param)
         return c.json({ error: "Field required", ok: false }, 422);
-    const newPost = await model.createProduct(c.env.VENTRATA, param);
-    if (!newPost) {
+    const newProduct = await model.createProduct(c.env.VENTRATA, param);
+    if (!newProduct) {
         return c.json({ error: 'Can not create new Product', ok: false }, 422);
     }
-    return c.json({ post: newPost, ok: true }, 201);
+    return c.json({ products: newProduct, ok: true }, 201);
 });
 api.get('/products/:id', async (c) => {
     const id = c.req.param('id');
-    const post = await model.getProduct(c.env.VENTRATA, id);
-    if (!post) {
+    const product = await model.getProduct(c.env.VENTRATA, id);
+    if (!product) {
         return c.json({ error: 'Not Found', ok: false }, 404);
     }
-    return c.json({ post: post, ok: true });
+    return c.json({ product: product, ok: true });
 });
 api.put('/products/:id', async (c) => {
     const id = c.req.param('id');
-    const post = await model.getProduct(c.env.VENTRATA, id);
-    if (!post) {
+    const product = await model.getProduct(c.env.VENTRATA, id);
+    if (!product) {
         // 204 No Content
         return new Response(null, { status: 204 });
     }
@@ -944,13 +944,13 @@ api.put('/products/:id', async (c) => {
 });
 api.delete('/products/:id', async (c) => {
     const id = c.req.param('id');
-    const post = await model.getProduct(c.env.VENTRATA, id);
-    if (!post) {
+    const product = await model.getProduct(c.env.VENTRATA, id);
+    if (!product) {
         // 204 No Content
         return new Response(null, { status: 204 });
     }
     const success = await model.deletePost(c.env.VENTRATA, id);
-    return c.json({ ok: success });
+    return c.json({ message: 'Successfully deleted', ok: success });
 });
 
 
@@ -988,8 +988,8 @@ const getProduct = async (KV, id) => {
     const value = await KV.get(generateID(id));
     if (!value)
         return;
-    const post = JSON.parse(value);
-    return post;
+    const product = JSON.parse(value);
+    return product;
 };
 exports.getProduct = getProduct;
 const createProduct = async (KV, param) => {
